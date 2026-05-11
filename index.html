@@ -1,87 +1,461 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="el">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Angelo Moshopoulos | Dental Surgeon</title>
+        <!-- Favicon -->
+        <link
+            rel="icon"
+            href="icons/dental-implant-circle-256-torqued.png"
+            type="image/png"
+        />
+        <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+        <!-- PWA -->
+        <link rel="manifest" href="manifest.json" />
+        <meta name="theme-color" content="#2c3e50" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
+        <!-- Meta -->
+        <meta
+            name="description"
+            content="Official info page of Angelo Moshopoulos, Dental Surgeon."
+        />
+        <!-- Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <!-- Style -->
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Angelo Moshopoulos | Dental Surgeon</title>
-    <!-- Favicon -->
-    <link rel="icon" href="icons/dental-implant-circle-256-torqued.png" type="image/png">
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-    <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2c3e50">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Meta -->
-    <meta name="description" content="Official info page of Angelo Moshopoulos, Dental Surgeon.">
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Style -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
+            :root {
+                --primary: #0288ff;
+                --primary-light: #4dabff;
+                --bg-dark: #0a192f;
+                --bg-gradient: linear-gradient(
+                    135deg,
+                    #0a192f 0%,
+                    #0d253f 100%
+                );
+                --card-bg: rgba(255, 255, 255, 0.05);
+                --card-border: rgba(255, 255, 255, 0.1);
+                --text-main: #f6f7fa;
+                --text-dim: rgba(246, 247, 250, 0.7);
+                --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
 
-<body>
-    <button id="lang-toggle-btn" class="lang-toggle">English</button>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-    <div class="app-container">
-        <header>
-            <div class="brand-wrapper">
-                <div class="profile-img-frame">
-                    <img src="icons/dental-implant-circle-256-torqued.png" alt="Dental Surgeon Logo">
+            body {
+                font-family: "Inter", sans-serif;
+                background: var(--bg-gradient);
+                background-attachment: fixed;
+                color: var(--text-main);
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem 1rem;
+                overflow-x: hidden;
+            }
+
+            /* Base Layout */
+            .app-container {
+                width: 100%;
+                max-width: 480px;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                align-items: center;
+                opacity: 0;
+                transform: translateY(20px);
+                transition:
+                    opacity 0.8s ease,
+                    transform 0.8s ease;
+            }
+
+            .app-container.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            /* Header Section */
+            header {
+                text-align: center;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .brand-wrapper {
+                position: relative;
+            }
+
+            .profile-img-frame {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background: var(--card-bg);
+                border: 2px solid var(--primary);
+                padding: 10px;
+                backdrop-filter: blur(10px);
+                box-shadow: 0 10px 30px rgba(2, 136, 255, 0.2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+
+            .profile-img-frame img {
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+            }
+
+            .lang-toggle {
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: var(--card-bg);
+                border: 1px solid var(--card-border);
+                padding: 0.5rem 1rem;
+                border-radius: 50px;
+                backdrop-filter: blur(10px);
+                cursor: pointer;
+                font-size: 0.8rem;
+                font-weight: 500;
+                transition: var(--transition);
+                z-index: 100;
+            }
+
+            .lang-toggle:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateY(-2px);
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                font-weight: 600;
+                letter-spacing: -0.02em;
+                margin-bottom: 0.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                color: var(--text-dim);
+                font-weight: 300;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
+
+            /* Links List */
+            .links-grid {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .link-item {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 1rem 1.5rem;
+                background: var(--card-bg);
+                border: 1px solid var(--card-border);
+                border-radius: 16px;
+                text-decoration: none;
+                color: var(--text-main);
+                font-weight: 500;
+                backdrop-filter: blur(10px);
+                transition: var(--transition);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .link-item::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent
+                );
+                transform: translateX(-100%);
+                transition: 0.5s;
+            }
+
+            .link-item:hover {
+                transform: translateY(-3px);
+                border-color: var(--primary);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .link-item:hover::before {
+                transform: translateX(100%);
+            }
+
+            .link-item.featured {
+                background: var(--primary);
+                border: none;
+                box-shadow: 0 10px 20px rgba(2, 136, 255, 0.3);
+            }
+
+            .link-item.featured:hover {
+                background: var(--primary-light);
+            }
+
+            .icon-box {
+                width: 24px;
+                height: 24px;
+                margin-right: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--primary);
+                font-size: 1.2rem;
+            }
+
+            .featured .icon-box {
+                color: white;
+            }
+
+            /* Responsive adjustments */
+            @media (max-width: 400px) {
+                header h1 {
+                    font-size: 1.5rem;
+                }
+
+                .lang-toggle {
+                    top: 1rem;
+                    right: 1rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <button
+            id="lang-toggle-btn"
+            class="lang-toggle"
+            data-translate="toggle_lang"
+        >
+            English
+        </button>
+
+        <div class="app-container">
+            <header>
+                <div class="brand-wrapper">
+                    <div class="profile-img-frame">
+                        <img
+                            src="icons/dental-implant-circle-256-torqued.png"
+                            alt="Dental Surgeon Logo"
+                        />
+                    </div>
                 </div>
-            </div>
-            <div class="header-text">
-                <h1 id="display-name">Αγγελος Μοσχοπουλος</h1>
-                <p id="display-title" class="subtitle">Χειρουργός Οδοντίατρος</p>
-            </div>
-        </header>
+                <div class="header-text">
+                    <h1 id="display-name" data-translate="name">
+                        Αγγελος Μοσχοπουλος
+                    </h1>
+                    <p
+                        id="display-title"
+                        class="subtitle"
+                        data-translate="title"
+                    >
+                        Χειρουργός Οδοντίατρος
+                    </p>
+                </div>
+            </header>
 
-        <main class="links-grid">
-            <a href="data/contacts.vcf" class="link-item featured" data-translate="download">
-                <div class="icon-box"><i class="fa-solid fa-address-card"></i></div>
-                Λήψη επαφής
-            </a>
+            <main class="links-grid">
+                <a
+                    href="data/contacts.vcf"
+                    class="link-item featured"
+                    data-translate="download"
+                >
+                    <div class="icon-box">
+                        <i class="fa-solid fa-address-card"></i>
+                    </div>
+                    Λήψη επαφής
+                </a>
 
-            <a href="tel:+302109312651" class="link-item" data-translate="phone">
-                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
-                Τηλέφωνο ιατρείου
-            </a>
+                <a
+                    href="tel:+302109312651"
+                    class="link-item"
+                    data-translate="phone"
+                >
+                    <div class="icon-box">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    Τηλέφωνο ιατρείου
+                </a>
 
-            <a href="https://www.dentplant.gr/booking.html" target="_blank" class="link-item"
-                data-translate="appointment">
-                <div class="icon-box"><i class="fa-solid fa-calendar-check"></i></div>
-                Κλείστε ραντεβού
-            </a>
+                <a
+                    href="https://www.dentplant.gr/booking.html"
+                    target="_blank"
+                    class="link-item"
+                    data-translate="appointment"
+                >
+                    <div class="icon-box">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    Κλείστε ραντεβού
+                </a>
 
-            <a href="mailto:angelo.moshopoulos@gmail.com" class="link-item" data-translate="email">
-                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
-                Email
-            </a>
+                <a
+                    href="mailto:angelo.moshopoulos@gmail.com"
+                    class="link-item"
+                    data-translate="email"
+                >
+                    <div class="icon-box">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    Email
+                </a>
 
-            <a href="https://www.dentplant.gr/" target="_blank" class="link-item" data-translate="website_dentplant">
-                <div class="icon-box"><i class="fa-solid fa-globe"></i></div>
-                Website: dentplant.gr
-            </a>
+                <a
+                    href="https://www.dentplant.gr/"
+                    target="_blank"
+                    class="link-item"
+                    data-translate="website_dentplant"
+                >
+                    <div class="icon-box">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    Website: dentplant.gr
+                </a>
 
-            <a href="https://www.i-smile.gr" target="_blank" class="link-item" data-translate="website_ismile">
-                <div class="icon-box"><i class="fa-solid fa-tooth"></i></div>
-                Website: i-smile.gr
-            </a>
-        </main>
-    </div>
+                <a
+                    href="https://www.i-smile.gr"
+                    target="_blank"
+                    class="link-item"
+                    data-translate="website_ismile"
+                >
+                    <div class="icon-box">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    Website: i-smile.gr
+                </a>
+            </main>
+        </div>
 
-    <!-- App Logic -->
-    <script src="js/app.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker registered', reg))
-                    .catch(err => console.error('Service Worker registration failed', err));
+        <!-- App Logic -->
+        <script>
+            const i18n = {
+                el: {
+                    name: "Αγγελος Μοσχοπουλος",
+                    title: "Χειρουργός Οδοντίατρος",
+                    download: "Λήψη επαφής",
+                    phone: "Τηλέφωνο ιατρείου",
+                    appointment: "Κλείστε ραντεβού",
+                    email: "Email",
+                    website_dentplant: "Website: dentplant.gr",
+                    website_ismile: "Website: i-smile.gr",
+                    toggle_lang: "English",
+                },
+                en: {
+                    name: "Angelo Moshopoulos",
+                    title: "Dental Surgeon",
+                    download: "Download info",
+                    phone: "Telephone number",
+                    appointment: "Appointment",
+                    email: "Email",
+                    website_dentplant: "Website: dentplant.gr",
+                    website_ismile: "Website: i-smile.gr",
+                    toggle_lang: "Ελληνικά",
+                },
+            };
+
+            let currentLang = "el";
+
+            function updateUI(lang) {
+                document.documentElement.lang = lang;
+                const strings = i18n[lang];
+
+                // Update all elements with a data-translate attribute
+                document.querySelectorAll("[data-translate]").forEach((el) => {
+                    const key = el.getAttribute("data-translate");
+                    if (strings[key]) {
+                        // Update text node specifically to preserve icons in link-items
+                        if (el.classList.contains("link-item")) {
+                            el.lastChild.textContent = ` ${strings[key]}`;
+                        } else {
+                            el.textContent = strings[key];
+                        }
+                    }
+                });
+
+                // Update VCF link specifically
+                const vcfLink = document.querySelector(
+                    '[data-translate="download"]',
+                );
+                if (vcfLink) {
+                    vcfLink.href =
+                        lang === "el"
+                            ? "data/contacts.vcf"
+                            : "data/contacts-en.vcf";
+                }
+            }
+
+            function toggleLanguage() {
+                currentLang = currentLang === "el" ? "en" : "el";
+                updateUI(currentLang);
+                localStorage.setItem("preferredLang", currentLang);
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // Check for saved preference
+                const savedLang = localStorage.getItem("preferredLang");
+                if (savedLang && i18n[savedLang]) {
+                    currentLang = savedLang;
+                }
+
+                updateUI(currentLang);
+
+                // Add entry animation
+                setTimeout(() => {
+                    document
+                        .querySelector(".app-container")
+                        .classList.add("visible");
+                }, 100);
+
+                document
+                    .getElementById("lang-toggle-btn")
+                    .addEventListener("click", toggleLanguage);
             });
-        }
-    </script>
-</body>
 
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker
+                        .register("./sw.js")
+                        .then((reg) =>
+                            console.log("Service Worker registered", reg),
+                        )
+                        .catch((err) =>
+                            console.error(
+                                "Service Worker registration failed",
+                                err,
+                            ),
+                        );
+                });
+            }
+        </script>
+    </body>
 </html>
