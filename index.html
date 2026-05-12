@@ -127,21 +127,24 @@
                 position: fixed;
                 top: 2rem;
                 right: 2rem;
-                background: var(--card-bg);
-                border: 1px solid var(--card-border);
+                background: rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(255, 255, 255, 0.3);
                 padding: 0.5rem 1rem;
                 border-radius: 50px;
                 backdrop-filter: blur(10px);
                 cursor: pointer;
-                font-size: 0.8rem;
-                font-weight: 500;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: #ffffff;
                 transition: var(--transition);
                 z-index: 100;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             }
 
             .lang-toggle:hover {
-                background: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.25);
                 transform: translateY(-2px);
+                border-color: var(--primary-light);
             }
 
             h1 {
@@ -341,18 +344,6 @@
                     </div>
                     Website: dentplant.gr
                 </a>
-
-                <a
-                    href="https://www.i-smile.gr"
-                    target="_blank"
-                    class="link-item"
-                    data-translate="website_ismile"
-                >
-                    <div class="icon-box">
-                        <i class="fa-solid fa-tooth"></i>
-                    </div>
-                    Website: i-smile.gr
-                </a>
             </main>
         </div>
 
@@ -367,7 +358,6 @@
                     appointment: "Κλείστε ραντεβού",
                     email: "Email",
                     website_dentplant: "Website: dentplant.gr",
-                    website_ismile: "Website: i-smile.gr",
                     toggle_lang: "English",
                 },
                 en: {
@@ -378,7 +368,6 @@
                     appointment: "Appointment",
                     email: "Email",
                     website_dentplant: "Website: dentplant.gr",
-                    website_ismile: "Website: i-smile.gr",
                     toggle_lang: "Ελληνικά",
                 },
             };
