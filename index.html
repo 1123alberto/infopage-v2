@@ -84,8 +84,8 @@
             }
 
             .app-container.visible {
-                opacity: 1;
-                transform: translateY(0);
+                opacity: 1 !important;
+                transform: translateY(0) !important;
             }
 
             /* Header Section */
@@ -375,31 +375,46 @@
             let currentLang = "el";
 
             function updateUI(lang) {
-                document.documentElement.lang = lang;
-                const strings = i18n[lang];
+                try {
+                    document.documentElement.lang = lang;
+                    const strings = i18n[lang];
 
-                // Update all elements with a data-translate attribute
-                document.querySelectorAll("[data-translate]").forEach((el) => {
-                    const key = el.getAttribute("data-translate");
-                    if (strings[key]) {
-                        // Update text node specifically to preserve icons in link-items
-                        if (el.classList.contains("link-item")) {
-                            el.lastChild.textContent = ` ${strings[key]}`;
-                        } else {
-                            el.textContent = strings[key];
-                        }
+                    document
+                        .querySelectorAll("[data-translate]")
+                        .forEach((el) => {
+                            const key = el.getAttribute("data-translate");
+                            if (strings[key]) {
+                                if (el.classList.contains("link-item")) {
+                                    // Safer way to update text without touching icons
+                                    const nodes = el.childNodes;
+                                    for (let i = 0; i < nodes.length; i++) {
+                                        if (
+                                            nodes[i].nodeType === 3 &&
+                                            nodes[i].textContent.trim().length >
+                                                0
+                                        ) {
+                                            nodes[i].textContent =
+                                                ` ${strings[key]}`;
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    el.textContent = strings[key];
+                                }
+                            }
+                        });
+
+                    const vcfLink = document.querySelector(
+                        '[data-translate="download"]',
+                    );
+                    if (vcfLink) {
+                        vcfLink.href =
+                            lang === "el"
+                                ? "data/contacts.vcf"
+                                : "data/contacts-en.vcf";
                     }
-                });
-
-                // Update VCF link specifically
-                const vcfLink = document.querySelector(
-                    '[data-translate="download"]',
-                );
-                if (vcfLink) {
-                    vcfLink.href =
-                        lang === "el"
-                            ? "data/contacts.vcf"
-                            : "data/contacts-en.vcf";
+                } catch (e) {
+                    console.error("Translation error:", e);
                 }
             }
 
@@ -410,39 +425,32 @@
             }
 
             document.addEventListener("DOMContentLoaded", () => {
-                // Check for saved preference
-                const savedLang = localStorage.getItem("preferredLang");
-                if (savedLang && i18n[savedLang]) {
-                    currentLang = savedLang;
+                try {
+                    const savedLang = localStorage.getItem("preferredLang");
+                    if (savedLang && i18n[savedLang]) {
+                        currentLang = savedLang;
+                    }
+                    updateUI(currentLang);
+                } catch (e) {
+                    console.error("Initialization error:", e);
+                } finally {
+                    // Ensure site is visible even if script partially fails
+                    setTimeout(() => {
+                        document
+                            .querySelector(".app-container")
+                            .classList.add("visible");
+                    }, 100);
                 }
 
-                updateUI(currentLang);
-
-                // Add entry animation
-                setTimeout(() => {
-                    document
-                        .querySelector(".app-container")
-                        .classList.add("visible");
-                }, 100);
-
-                document
-                    .getElementById("lang-toggle-btn")
-                    .addEventListener("click", toggleLanguage);
+                const btn = document.getElementById("lang-toggle-btn");
+                if (btn) btn.addEventListener("click", toggleLanguage);
             });
 
             if ("serviceWorker" in navigator) {
                 window.addEventListener("load", () => {
                     navigator.serviceWorker
                         .register("./sw.js")
-                        .then((reg) =>
-                            console.log("Service Worker registered", reg),
-                        )
-                        .catch((err) =>
-                            console.error(
-                                "Service Worker registration failed",
-                                err,
-                            ),
-                        );
+                        .catch((err) => console.error("SW failed:", err));
                 });
             }
         </script>
